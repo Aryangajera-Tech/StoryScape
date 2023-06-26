@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:async';
+import 'package:day_2/ad_helper.dart';
 import 'package:day_2/screen/details.dart';
 import 'package:day_2/utils/utils.dart';
 import 'package:day_2/widgets/tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:readmore/readmore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,6 +22,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<dynamic> articles = [];
   int current = 1;
+  BannerAd? _bannerAd;
 
   Future<void> fetchData(String section) async {
     await Future.delayed(const Duration(milliseconds: 200));
@@ -36,10 +39,38 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    // TODO: Initialize Google Mobile Ads SDK
+    return MobileAds.instance.initialize();
+  }
+
   @override
   void initState() {
     super.initState();
     fetchData('us');
+    BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _bannerAd = ad as BannerAd;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    ).load();
+  }
+
+  @override
+  void dispose() {
+    // TODO: Dispose a BannerAd object
+    _bannerAd?.dispose();
+    super.dispose();
   }
 
   @override
@@ -116,6 +147,17 @@ class _HomeState extends State<Home> {
                     );
                   }),
             ),
+
+            ///ADs
+            if (_bannerAd != null)
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd!),
+                ),
+              ),
 
             /// MAIN BODY
             if (articles.isEmpty)

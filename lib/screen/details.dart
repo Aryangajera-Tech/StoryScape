@@ -385,7 +385,7 @@ class _StoryScreenState extends State<StoryScreen>
                         ),
                         Text(
                           widget.abstract.toString(),
-                          style: GoogleFonts.hindGuntur(fontSize: 20,color: Colors.white38),
+                          style: GoogleFonts.hindGuntur(fontSize: 18,color: Colors.white38),
                         ),
                       ],
                     ),
