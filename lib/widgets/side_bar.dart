@@ -41,6 +41,7 @@ class _SideBarState extends State<SideBar> {
     await HelperFunctions.getUserNameFromSF().then((val) {
       setState(() {
         userName = val!;
+        print("userName:" + userName);
       });
     });
   }
@@ -64,7 +65,7 @@ class _SideBarState extends State<SideBar> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InfoCard(),
+              InfoCard(username: userName),
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
                 child: Text(

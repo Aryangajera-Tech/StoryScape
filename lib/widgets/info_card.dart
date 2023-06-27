@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 
 
 class InfoCard extends StatefulWidget {
+  InfoCard({
+    required this.username
+});
+  String username;
   @override
   State<InfoCard> createState() => _InfoCardState();
 }
@@ -17,7 +21,7 @@ class _InfoCardState extends State<InfoCard> {
               backgroundColor: Yellow,
           child: Icon(Icons.person_outline_rounded, color: Green)
             ),
-      // title:Text(lst['fullName'].toString(),style: TextStyle(color: Yellow),)
+      title:Text(widget.username.toString(),style: TextStyle(color: Yellow))
     );
   }
 }
