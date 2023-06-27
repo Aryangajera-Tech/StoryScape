@@ -9,6 +9,7 @@ import 'package:day_2/utils/utils.dart';
 import 'package:day_2/widgets/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 class sign_in extends StatefulWidget {
@@ -68,8 +69,7 @@ class _sign_inState extends State<sign_in> {
         backgroundColor: Yellow,
         body: _isLoading
             ? Center(
-                child: CircularProgressIndicator(
-                    color: Green),
+                child: SpinKitRipple(color:Green)
               )
             : Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
