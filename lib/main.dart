@@ -20,6 +20,7 @@ import 'screen/entry_point.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
   runApp(const MyApp());
 }
 
@@ -53,6 +54,7 @@ class _SpleshScreenState extends State<SpleshScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
     getUserLoggedInStatus();
   }
 
